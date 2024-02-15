@@ -64,7 +64,7 @@ const createUserController = async ({
     }
   }
 
-  return { message: "Usuario creado", data: newUser };
+  return { message: "Usuario creado", data: newUser, error: false };
 };
 
 const updateUserController = async ({
@@ -80,7 +80,9 @@ const updateUserController = async ({
   if (!id) {
     return { error: true, message: "Falta el id" };
   }
+  let change = false;
   if (name || surname || description || birthdate || image) {
+    change = true;
     const userToUpdate = await User.findByPk(id);
     name && (userToUpdate.name = name);
     surname && (userToUpdate.surname = surname);
@@ -90,6 +92,7 @@ const updateUserController = async ({
     await userToUpdate.save();
   }
   if (address) {
+    change = true;
     const { city, state, country, street, number, zipcode } = address;
     if (city || state || country || street || number || zipcode) {
       const addressToUpdate = await Address.findOne({ where: { UserId: id } });
@@ -102,6 +105,32 @@ const updateUserController = async ({
       await addressToUpdate.save();
     }
   }
+
+  const user = await User.findByPk(id, {
+    include: [Address, ContactInfo],
+  });
+
+  if (change) {
+    return { message: "Usuario actualizado", data: user, error: false };
+  }
+  return { message: "No se han realizado cambios", data: user, error: false };
 };
 
-module.exports = { createUserController, updateUserController };
+const getUserController = async (id) => {
+  if (!id) {
+    return { error: true, message: "Falta el id" };
+  }
+  const user = await User.findByPk(id, {
+    include: [Address, ContactInfo],
+  });
+  if (!user) {
+    return { error: true, message: "Usuario no encontrado" };
+  }
+  return { message: "Usuario encontrado", data: user, error: false };
+};
+
+module.exports = {
+  createUserController,
+  updateUserController,
+  getUserController,
+};

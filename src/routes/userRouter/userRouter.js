@@ -3,9 +3,12 @@ const express = require("express");
 const {
   createUserHandler,
   updateUserHandler,
+  getUserHandler,
 } = require("../../handlers/userHandlers/userHandlers");
 
 const userRouter = express.Router();
+
+userRouter.get("/:id", getUserHandler);
 
 userRouter.post("/", createUserHandler);
 
