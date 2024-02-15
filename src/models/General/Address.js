@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
     number: {
       type: DataTypes.INTEGER,
     },
-    zipCode: {
+    zipcode: {
       type: DataTypes.INTEGER,
     },
   });

@@ -47,11 +47,11 @@ const {
   ContactInfo,
 } = sequelize.models;
 
-Address.hasOne(User);
-User.belongsTo(Address);
+User.hasOne(Address);
+Address.belongsTo(User);
 
-Credentials.hasOne(User);
-User.belongsTo(Credentials);
+User.hasOne(Credentials);
+Credentials.belongsTo(User);
 
 User.hasMany(ContactInfo);
 ContactInfo.belongsTo(User);
