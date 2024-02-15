@@ -1,6 +1,7 @@
 const {
   createUserController,
   updateUserController,
+  getUserController,
 } = require("../../controllers/userControllers/userController");
 
 const createUserHandler = async (req, res) => {
@@ -29,7 +30,7 @@ const createUserHandler = async (req, res) => {
     if (response.error) {
       res.status(400).json({ error: true, message: response.message });
     }
-    res.status(201).json({ response, error: false });
+    res.status(201).json(response);
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
     console.log(error);
@@ -40,7 +41,6 @@ const updateUserHandler = async (req, res) => {
   const { name, surname, birthdate, description, contactInfo, address, image } =
     req.body;
   const { id } = req.params;
-
   try {
     const response = await updateUserController({
       name,
@@ -52,10 +52,28 @@ const updateUserHandler = async (req, res) => {
       image,
       id,
     });
-    res.status(200).json(response);
+    if (response.error) {
+      return res.status(400).json({ error: true, message: response.message });
+    } else {
+      res.status(200).json(response);
+    }
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }
 };
 
-module.exports = { createUserHandler, updateUserHandler };
+const getUserHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await getUserController(id);
+    if (!response || response.error) {
+      res.status(404).json({ error: true, message: response.message });
+    } else {
+      res.status(200).json(response);
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+
+module.exports = { createUserHandler, updateUserHandler, getUserHandler };
