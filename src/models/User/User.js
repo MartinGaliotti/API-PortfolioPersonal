@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
     description: {
       type: DataTypes.TEXT,
     },
-    birthDate: {
+    birthdate: {
       type: DataTypes.DATEONLY,
     },
     image: {
