@@ -7,7 +7,7 @@ const {
 
 const projectRouter = Router();
 
-projectRouter.get("/", getProjectsHandler);
+projectRouter.get("/:id", getProjectsHandler);
 
 projectRouter.post("/:id", createProjectsHandler);
 

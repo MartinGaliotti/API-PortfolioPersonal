@@ -1,7 +1,22 @@
-const { User, Skill, Technology } = require("../../db");
+const { User, Skill, Technology, Project } = require("../../db");
 
-const getProjectsController = async () => {
-  return "Proyectos";
+const getProjectsController = async (id) => {
+  if (!id) {
+    return { error: true, message: "Falta el id" };
+  }
+  const user = await User.findByPk(id, {
+    include: [
+      {
+        model: Project,
+      },
+    ],
+  });
+
+  if (!user) {
+    return { error: true, message: "No existe el usuario" };
+  }
+  const projects = await user.getProjects();
+  return { data: projects, message: "Proyectos encontrados", error: false };
 };
 
 const createProjectsController = async (
