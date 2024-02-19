@@ -122,7 +122,17 @@ const editProjectController = async (
 
       await Promise.all(userPromises);
     }
+
+    const totalTechnologies = await project.getTechnologies();
+    const promises = totalTechnologies.map((technology) => {
+      if (!technologies.find((t) => t.name === technology.name)) {
+        return project.removeTechnology(technology);
+      }
+    });
+    await Promise.all(promises);
   }
+
+  return { error: false, message: "Proyecto editado", data: project };
 };
 
 const createProjectsController = async (
