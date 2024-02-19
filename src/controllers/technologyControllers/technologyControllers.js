@@ -1,11 +1,38 @@
 const { User, Technology } = require("../../db");
 
-const editTechnologyController = (id, name, image) => {
-  return { error: false, message: "Edit" };
+const editTechnologyController = async (id, name, image) => {
+  if (!id) {
+    return { error: true, message: "Falta el id" };
+  }
+  if (!name && !image) {
+    return { error: true, message: "Falta el nombre" };
+  }
+  const technology = await Technology.findByPk(id);
+
+  if (!technology) {
+    return { error: true, message: "Tecnologia no encontrada" };
+  }
+
+  name && (technology.name = name);
+  image && (technology.image = image);
+
+  await technology.save();
+
+  return { error: false, message: "Tecnologia editada", data: technology };
 };
 
 const deleteTechnologyController = async (id) => {
-  return { error: false, message: "Delete" };
+  if (!id) {
+    return { error: true, message: "Falta el id" };
+  }
+  const technology = await Technology.findByPk(id);
+  if (!technology) {
+    return { error: true, message: "Tecnologia no encontrada" };
+  }
+
+  technology.destroy();
+
+  return { error: false, message: "Tecnologia eliminada", data: technology };
 };
 
 const getTechnologyByUserIdController = async (id) => {
@@ -13,13 +40,15 @@ const getTechnologyByUserIdController = async (id) => {
     return { error: true, message: "Falta el id" };
   }
 
-  const user = await User.findByPk(id);
+  const user = await User.findByPk(id, {
+    include: { model: Technology },
+  });
 
   if (!user) {
     return { error: true, message: "Usuario no encontrado" };
   }
 
-  const technologies = user.getTechnologies();
+  const technologies = await user.getTechnologies();
 
   return {
     error: false,
