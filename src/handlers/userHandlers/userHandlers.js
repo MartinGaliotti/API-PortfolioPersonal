@@ -2,6 +2,7 @@ const {
   createUserController,
   updateUserController,
   getUserController,
+  deleteUserController,
 } = require("../../controllers/userControllers/userController");
 
 const createUserHandler = async (req, res) => {
@@ -76,4 +77,22 @@ const getUserHandler = async (req, res) => {
   }
 };
 
-module.exports = { createUserHandler, updateUserHandler, getUserHandler };
+const deleteUserHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await deleteUserController(id);
+    if (!response || response.error) {
+      res.status(404).json(response);
+    } else {
+      res.status(200).json(response);
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+module.exports = {
+  createUserHandler,
+  updateUserHandler,
+  getUserHandler,
+  deleteUserHandler,
+};
