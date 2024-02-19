@@ -10,6 +10,9 @@ const createUserController = async ({
   contactInfo,
   credentials,
 }) => {
+  if (!credentials) {
+    return { error: true, message: "Faltan datos" };
+  }
   const { email, password } = credentials;
 
   //Error si faltan datos
@@ -129,8 +132,20 @@ const getUserController = async (id) => {
   return { message: "Usuario encontrado", data: user, error: false };
 };
 
+const deleteUserController = async (id) => {
+  if (!id) {
+    return { error: true, message: "Falta el id" };
+  }
+  const user = await User.findByPk(id);
+  if (!user) {
+    return { error: true, message: "Usuario no encontrado" };
+  }
+  await user.destroy();
+  return { message: "Usuario eliminado", data: user, error: false };
+};
 module.exports = {
   createUserController,
   updateUserController,
   getUserController,
+  deleteUserController,
 };
