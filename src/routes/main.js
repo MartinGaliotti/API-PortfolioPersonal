@@ -8,6 +8,8 @@ const projectRouter = require("./projectRouter/projectRouter");
 const skillsRouter = require("./skillsRouter/skillsRouter");
 //TechnologyRouter
 const technologyRouter = require("./technologyRouter/technologyRouter");
+//ExperienceRouter
+const experienceRouter = require("./experienceRouter/experienceRouter");
 
 const mainRouter = Router();
 
@@ -18,5 +20,7 @@ mainRouter.use("/project", projectRouter);
 mainRouter.use("/skills", skillsRouter);
 
 mainRouter.use("/technology", technologyRouter);
+
+mainRouter.use("/experience", experienceRouter);
 
 module.exports = mainRouter;
