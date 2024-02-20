@@ -26,7 +26,7 @@ const editProjectController = async (
   url,
   image,
   startDate,
-  endDate,
+  finishDate,
   skills,
   technologies
 ) => {
@@ -40,14 +40,14 @@ const editProjectController = async (
     return { error: true, message: "No existe el proyecto" };
   }
 
-  if (title || description || url || image || startDate || endDate) {
+  if (title || description || url || image || startDate || finishDate) {
     const projectData = {};
     title && (projectData.title = title);
     description && (projectData.description = description);
     url && (projectData.url = url);
     image && (projectData.image = image);
     startDate && (projectData.startDate = startDate);
-    endDate && (projectData.endDate = endDate);
+    finishDate && (projectData.finishDate = finishDate);
 
     await project.update(projectData);
   }
@@ -142,7 +142,7 @@ const createProjectsController = async (
   url,
   image,
   startDate,
-  endDate,
+  finishDate,
   skills,
   technologies
 ) => {
@@ -164,7 +164,7 @@ const createProjectsController = async (
   url && (projectData.url = url);
   image && (projectData.image = image);
   startDate && (projectData.startDate = startDate);
-  endDate && (projectData.endDate = endDate);
+  finishDate && (projectData.finishDate = finishDate);
 
   const project = await user.createProject(projectData);
 

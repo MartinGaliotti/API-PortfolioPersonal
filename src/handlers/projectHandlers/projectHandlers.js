@@ -27,7 +27,7 @@ const editProjectHandler = async (req, res) => {
     url,
     image,
     startDate,
-    endDate,
+    finishDate,
     skills,
     technologies,
   } = req.body;
@@ -39,7 +39,7 @@ const editProjectHandler = async (req, res) => {
       url,
       image,
       startDate,
-      endDate,
+      finishDate,
       skills,
       technologies
     );
@@ -61,7 +61,7 @@ const createProjectsHandler = async (req, res) => {
     url,
     image,
     startDate,
-    endDate,
+    finishDate,
     skills,
     technologies,
   } = req.body;
@@ -73,7 +73,7 @@ const createProjectsHandler = async (req, res) => {
       url,
       image,
       startDate,
-      endDate,
+      finishDate,
       skills,
       technologies
     );
