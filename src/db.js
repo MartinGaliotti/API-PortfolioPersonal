@@ -47,8 +47,8 @@ const {
   ContactInfo,
 } = sequelize.models;
 
-User.hasOne(Address);
-Address.belongsTo(User);
+Address.hasOne(User);
+User.belongsTo(Address);
 
 User.hasOne(Credentials);
 Credentials.belongsTo(User);
@@ -80,11 +80,17 @@ Skill.belongsToMany(Project, { through: "ProjectSkill" });
 Experience.belongsToMany(Technology, { through: "ExperienceTechnology" });
 Technology.belongsToMany(Experience, { through: "ExperienceTechnology" });
 
+Address.hasOne(Experience);
+Experience.belongsTo(Address);
+
 Experience.belongsToMany(Skill, { through: "ExperienceSkill" });
 Skill.belongsToMany(Experience, { through: "ExperienceSkill" });
 
 Education.belongsToMany(Technology, { through: "EducationTechnology" });
 Technology.belongsToMany(Education, { through: "EducationTechnology" });
+
+Address.hasOne(Education);
+Education.belongsTo(Address);
 
 Education.belongsToMany(Skill, { through: "EducationSkill" });
 Skill.belongsToMany(Education, { through: "EducationSkill" });

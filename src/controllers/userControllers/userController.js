@@ -47,7 +47,7 @@ const createUserController = async ({
         number,
         zipcode,
       });
-      await newAddress.setUser(newUser);
+      await newUser.setAddress(newAddress);
     }
   }
 
