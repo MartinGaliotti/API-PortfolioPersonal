@@ -8,7 +8,7 @@ const {
 const createExperienceHandler = async (req, res) => {
   const { userId } = req.params;
   const {
-    company,
+    companyName,
     job,
     description,
     startDate,
@@ -21,7 +21,7 @@ const createExperienceHandler = async (req, res) => {
   try {
     const response = await createExperienceController(
       userId,
-      company,
+      companyName,
       job,
       description,
       startDate,
@@ -36,6 +36,7 @@ const createExperienceHandler = async (req, res) => {
       res.status(200).json(response);
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: true, message: error.message });
   }
 };
@@ -43,7 +44,7 @@ const createExperienceHandler = async (req, res) => {
 const updateExperienceHandler = async (req, res) => {
   const { id } = req.params;
   const {
-    company,
+    companyName,
     job,
     description,
     startDate,
@@ -56,7 +57,7 @@ const updateExperienceHandler = async (req, res) => {
   try {
     const response = await updateExperienceController(
       id,
-      company,
+      companyName,
       job,
       description,
       startDate,
